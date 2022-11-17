@@ -1,102 +1,123 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>Wild Rydes</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Serverless web application example">
-    <meta name="author" content="">
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
-    <link rel="stylesheet" href="/css/ride.css">
-    <link rel="stylesheet" href="/css/message.css">
-</head>
-
 <body>
-
-    <div class="info panel panel-default">
-        <div class="panel-heading">
-            <button id="request" class="btn btn-primary" disabled="disabled">Set pickup</button>
-            <div class="dropdown pull-right">
-                <button id="accountLink" class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Account <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="accountLink">
-                    <li><a id="signOut" href="#">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="panel-body">
-            <ol id="updates">
-                <li>Welcome! Click the map to set your pickup location.</li>
-            </ol>
-        </div>
-    </div>
-
-    <div id="noApiMessage" class="configMessage" style="display: none;">
-        <div class="backdrop"></div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Successfully Authenticated!</h3>
-            </div>
-            <div class="panel-body">
-                <p>This page is not functional yet because there is no API invoke URL configured in <a href="/js/config.js">/js/config.js</a>. You'll configure this in Module 3.</p>
-                <p>In the meantime, if you'd like to test the Amazon Cognito user pool authorizer for your API, use the auth token below:</p>
-                <textarea class="authToken"></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div id="noCognitoMessage" class="configMessage" style="display: none;">
-        <div class="backdrop"></div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">No Cognito User Pool Configured</h3>
-            </div>
-            <div class="panel-body">
-                <p>There is no user pool configured in <a href="/js/config.js">/js/config.js</a>. You'll configure this in Module 2 of the workshop.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="main">
-        <div id="map">
-        </div>
-    </div>
-
-    <div id="authTokenModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="authToken">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Your Auth Token</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea class="authToken"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script src="js/vendor/jquery-3.1.0.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-    <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-    <script src="https://js.arcgis.com/4.3/"></script>
-    <script src="js/config.js"></script>
-    <script src="js/cognito-auth.js"></script>
-    <script src="js/esri-map.js"></script>
-    <script src="js/ride.js"></script>
+	<h1>TIME TABLE</h1>
+	<table border="5" cellspacing="0" align="center">
+		<!--<caption>Timetable</caption>-->
+		<tr>
+			<td align="center" height="50"
+				width="100"><br>
+				<b>Day/Period</b></br>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>I<br>9:30-10:20</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>II<br>10:20-11:10</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>III<br>11:10-12:00</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>12:00-12:40</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>IV<br>12:40-1:30</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>V<br>1:30-2:20</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>VI<br>2:20-3:10</b>
+			</td>
+			<td align="center" height="50"
+				width="100">
+				<b>VII<br>3:10-4:00</b>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Monday</b></td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Mat</td>
+			<td align="center" height="50">Che</td>
+			<td rowspan="6" align="center" height="50">
+				<h2>L<br>U<br>N<br>C<br>H</h2>
+			</td>
+			<td colspan="3" align="center"
+				height="50">LAB</td>
+			<td align="center" height="50">Phy</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Tuesday</b>
+			</td>
+			<td colspan="3" align="center"
+				height="50">LAB
+			</td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Che</td>
+			<td align="center" height="50">Mat</td>
+			<td align="center" height="50">SPORTS</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Wednesday</b>
+			</td>
+			<td align="center" height="50">Mat</td>
+			<td align="center" height="50">phy</td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Che</td>
+			<td colspan="3" align="center"
+				height="50">LIBRARY
+			</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Thursday</b>
+			</td>
+			<td align="center" height="50">Phy</td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Che</td>
+			<td colspan="3" align="center"
+				height="50">LAB
+			</td>
+			<td align="center" height="50">Mat</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Friday</b>
+			</td>
+			<td colspan="3" align="center"
+				height="50">LAB
+			</td>
+			<td align="center" height="50">Mat</td>
+			<td align="center" height="50">Che</td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Phy</td>
+		</tr>
+		<tr>
+			<td align="center" height="50">
+				<b>Saturday</b>
+			</td>
+			<td align="center" height="50">Eng</td>
+			<td align="center" height="50">Che</td>
+			<td align="center" height="50">Mat</td>
+			<td colspan="3" align="center"
+				height="50">SEMINAR
+			</td>
+			<td align="center" height="50">SPORTS</td>
+		</tr>
+	</table>
 </body>
 
 </html>
+
