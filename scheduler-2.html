@@ -1,100 +1,81 @@
-<!doctype html>
-<html lang="en" data-framework="javascript">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Calendar App</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      font-weight: bold;
+      color: #333333;
+    }
+
+    th {
+      background-color: #333333;
+      color: white;
+    }
+
+    button {
+      background-color: #333333;
+      color: white;
+      border: none;
+      padding: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #666666;
+    }
+  </style>
 </head>
-
 <body>
+  <table id="schedule">
+    <tr>
+      <th>Time</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+  </table>
 
-    <div id="app" class="main">
+  <script>
+    const times = ["8:30 - 9:15", "9:15 - 10:00", "10:00 - 10:20", "10:20 - 11:05", "11:05 - 11:50", "11:50 - 12:35", "12:35 - 13:20", "13:20 - 14:05", "14:05 - 14:20", "14:20 - 15:05", "15:05 - 15:50", "15:50 - 16:35"];
+    const schedule = document.getElementById("schedule");
+    times.forEach(time => {
+      const row = document.createElement("tr");
+      const timeCell = document.createElement("td");
+      timeCell.textContent = time;
+      row.appendChild(timeCell);
+      for (let i = 0; i < 7; i++) {
+        const cell = document.createElement("td");
+        const button = document.createElement("button");
+        button.textContent = "empty";
+        button.addEventListener("click", openFunction);
+        cell.appendChild(button);
+        row.appendChild(cell);
+      }
+      schedule.appendChild(row);
+    });
 
-        <div class="date-month">
-            <h2><i class="far fa-calendar-alt"></i> Appointments {{ month }} {{ year }}</h2>
-        </div>
-       <!-- area callendar appointment -->
-        <div class="calendar">
-
-            <table style="overflow-x:auto;">
-                <!-- days week  -->
-                <tr class="date-days">
-                    <th v-for="days in daysWeek">
-                        <h3>{{ days }}</h3>
-                    </th>
-                </tr>
-                <!-- end days week  -->
-                
-                <!-- days callendar  -->
-                <tr class="date-days">
-                    <td v-for="date in endDateMonth" v-if="date <= 7" @click="openModal(date)" ref="date">
-                        <p class="day">{{ date }}</p>
-                    </td>
-                </tr>
-
-                <tr class="date-days">
-                    <td v-for="date in endDateMonth" v-if="date >= 8 && date <= 14 " @click="openModal(date)" ref="date">
-                        <p class="day">{{ date }}</p>
-                    </td>
-                </tr>
-
-                <tr class="date-days">
-                    <td v-for="date in endDateMonth" v-if="date >= 15 && date <= 21 " @click="openModal(date)" ref="date">
-                        <p class="day">{{ date }}</p>
-                    </td>
-                </tr>
-
-                <tr class="date-days">
-                    <td v-for="date in endDateMonth" v-if="date >= 22 && date <= 28 " @click="openModal(date)" ref="date">
-                        <p class="day">{{ date }}</p>
-                    </td>
-                </tr>
-
-                <tr class="date-days">
-                    <td v-for="date in endDateMonth" v-if="date >= 29" @click="openModal(date)" ref="date">
-                        <p class="day">{{ date }}</p>
-                    </td>
-                </tr>
-                <!-- end days callendar  -->
-
-            </table>
-        </div>
-       <!-- end area callendar appointment -->
-
-        <!-- modal add, edit remove events-->
-        <div class="modal" v-show="modal">
-            <div class="modal-content">
-                <h3 v-show="!editMode"> <i class="far fa-calendar-alt"></i>
-                    Add new appointment day {{ dayAppointment}}
-                </h3>
-                <h3 v-show="editMode"> <i class="far fa-calendar-alt"></i> 
-                    Edit appointment day {{ dayAppointment }}
-                </h3>
-                
-                <div>
-                    <input type="text" v-model="nameAppointment" placeholder="Name Appointment"><br>
-                    <i class="error-msg">{{messageErro}}</i><br>
-                </div>
-
-                <div>
-                    <button class="add" @click="addAppointment()" v-show="!editMode"><i class="fas fa-check"></i> Add</button>
-                    <button class="edit" @click="editAppointment()" v-show="editMode"><i class="fas fa-pencil-alt"></i>
-                        Edit</button>
-                    <button class="delete" @click="deleteAppointment()" v-show="editMode"><i class="fas fa-times"></i>
-                        Delete</button>
-                    <button class="cancel" @click="closeModal()"><i class="fas fa-ban"></i> Cancel</button>
-                </div>
-            </div>
-        </div>
-        <!-- end modal add, edit remove events -->
-
-    </div>
-
-    <script src="https://momentjs.com/downloads/moment.js"></script>
-    <script src="calendar.js"></script>
+    function openFunction() {
+      // JavaScript code to be executed when the button is clicked
+    }
+  </script>
 </body>
-
 </html>
