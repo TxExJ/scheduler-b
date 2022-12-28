@@ -43,8 +43,13 @@
       background-color: #666666;
     }
   </style>
+  <link rel="stylesheet" href="popup.css"
 </head>
 <body>
+  <div id="myPopup" class="popup">
+    <p>This is the content of the popup window.</p>
+    <button onclick="closeWindow()">Close</button>
+  </div>
   <table id="schedule">
     <tr>
       <th>Time</th>
@@ -78,7 +83,15 @@
     });
 
     function openFunction() {
-      // JavaScript code to be executed when the button is clicked
+      // Get the popup element 
+      var popup = document.getElementById("myPopup");
+      
+      // Toggle the visibility of the popup
+      if (popup.style.display === "none") {
+        popup.style.display = "block";
+      } else {
+        popup.style.display = "none";
+      }
     }
   </script>
 </body>
