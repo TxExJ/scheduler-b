@@ -82,13 +82,14 @@
       <th>Sunday</th>
     </tr>
   </table>
-  <div id="myPopup" class="popup">
-    <p>This is the content of the popup window.</p>
-    <button onclick="closeWindow()">Close</button>
-  </div>
 
   <script>
-    function openFunction() {
+    <div id="myPopup" class="popup">
+      <p>This is the content of the popup window.</p>
+      <button onclick="closeWindow()">Close</button>
+    </div>
+    
+    function openWindow() {
       // Get the popup element 
       var popup = document.getElementById("myPopup");
       
@@ -110,7 +111,7 @@
         const cell = document.createElement("td");
         const button = document.createElement("button");
         button.textContent = "empty";
-        button.addEventListener("click", openFunction);
+        button.addEventListener("click", openWindow());
         cell.appendChild(button);
         row.appendChild(cell);
       }
