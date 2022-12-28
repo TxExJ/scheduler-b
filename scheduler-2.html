@@ -42,8 +42,32 @@
     button:hover {
       background-color: #666666;
     }
+    .popup {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    
+    .popup .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px 0;
+      visibility: hidden;
+      z-index: 1;
+    }
+
+    .popup:hover .popup-content {
+      visibility: visible;
+    }
+
   </style>
-  <link rel="stylesheet" href="popup.css"
 </head>
 <body>
   <div id="myPopup" class="popup">
@@ -87,10 +111,10 @@
       var popup = document.getElementById("myPopup");
       
       // Toggle the visibility of the popup
-      if (popup.style.display === "none") {
-        popup.style.display = "block";
+      if (popup.style.visibility === "hidden") {
+        popup.style.visibility = "visible";
       } else {
-        popup.style.display = "none";
+        popup.style.visibility = "hidden";
       }
     }
   </script>
