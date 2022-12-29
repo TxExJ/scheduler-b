@@ -1,122 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    td, th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    td {
-      font-weight: bold;
-      color: #333333;
-    }
-
-    th {
-      background-color: #333333;
-      color: white;
-    }
-
-    button {
-      background-color: #333333;
-      color: white;
-      border: none;
-      padding: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    button:hover {
-      background-color: #666666;
-    }
-    .popup {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-    }
-    
-    .popup .popup-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 8px 0;
-      visibility: hidden;
-      z-index: 1;
-    }
-
-    .popup:hover .popup-content {
-      visibility: visible;
-    }
-
-  </style>
+    <link rel="stylesheet" type="text/css" href="style.css"
 </head>
 <body>
-  <table id="schedule">
-    <tr>
-      <th>Time</th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>Saturday</th>
-      <th>Sunday</th>
-    </tr>
-  </table>
-
-  <script>
-    <div id="myPopup" class="popup">
-      <p>This is the content of the popup window.</p>
-      <button onclick="closeWindow()">Close</button>
-    </div>
+    <table id="schedule">
+        <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+        </tr>
+    </table>
     
-    function openWindow() {
-      // Get the popup element 
-      var popup = document.getElementById("myPopup");
-      
-      // Toggle the visibility of the popup
-      if (popup.style.visibility === "hidden") {
-        popup.style.visibility = "visible";
-      } else {
-        popup.style.visibility = "hidden";
-      }
-    }
-    const times = ["8:30 - 9:15", "9:15 - 10:00", "10:00 - 10:20", "10:20 - 11:05", "11:05 - 11:50", "11:50 - 12:35", "12:35 - 13:20", "13:20 - 14:05", "14:05 - 14:20", "14:20 - 15:05", "15:05 - 15:50", "15:50 - 16:35"];
-    const schedule = document.getElementById("schedule");
-    times.forEach(time => {
-      const row = document.createElement("tr");
-      const timeCell = document.createElement("td");
-      timeCell.textContent = time;
-      row.appendChild(timeCell);
-      for (let i = 0; i < 7; i++) {
-        const cell = document.createElement("td");
-        const button = document.createElement("button");
-        button.textContent = "empty";
-        button.addEventListener("click", openWindow());
-        cell.appendChild(button);
-        row.appendChild(cell);
-      }
-      schedule.appendChild(row);
-    });
+    <div id="myPopup" class="popup">
+        <div class="popup-content">
+            <p>This is the content of the popup window.</p>
+            <button onclick="closeWindow()">Close</button>
+        </div>
+    </div>
+
+    <script>
+    
+        function openWindow() {
+            // Get the popup element 
+            var popup = document.getElementById("myPopup");
+            // Toggle the visibility of the popup
+            if (popup.style.visibility === "hidden") {
+            popup.style.visibility = "visible";
+            }
+        }
+    
+        function closeWindow() {
+            // Get the popup element 
+            var popup = document.getElementById("myPopup");
+            // Hide the popup
+            popup.style.visibility = "hidden";
+        }
+    
+        const times = ["8:30 - 9:15", "9:15 - 10:00", "10:00 - 10:20", "10:20 - 11:05", "11:05 - 11:50", "11:50 - 12:35", "12:35 - 13:20", "13:20 - 14:05", "14:05 - 14:20", "14:20 - 15:05", "15:05 - 15:50", "15:50 - 16:35"];
+        const schedule = document.getElementById("schedule");
+        times.forEach(time => {
+            const row = document.createElement("tr");
+            const timeCell = document.createElement("td");
+            timeCell.textContent = time;
+            row.appendChild(timeCell);
+            for (let i = 0; i < 7; i++) {
+                const cell = document.createElement("td");
+                const button = document.createElement("button");
+                button.textContent = "empty";
+                button.addEventListener("click", openWindow);
+                cell.appendChild(button);
+                row.appendChild(cell);
+            }
+            schedule.appendChild(row);
+        });
 
   </script>
 </body>
