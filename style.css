@@ -1,31 +1,33 @@
 
+@import url('https://fonts.googleapis.com/css?family=Chivo');
+
 table {
     border-collapse: collapse;
-    width: 100%;
-    z-index: -1;
-  }
+    width: 70%;
+    float: left;
+}
 
-  td, th {
+td, th {
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
     padding: 8px;
-  }
+}
 
-  tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #f2f2f2;
-  }
+}
 
-  td {
+td {
     font-weight: bold;
     color: #333333;
-  }
+}
 
-  th {
+th {
     background-color: #333333;
     color: white;
-  }
+}
 
-  button {
+button {
     background-color: #333333;
     color: white;
     border: none;
@@ -35,61 +37,55 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  button:hover {
+button:hover {
     background-color: #666666;
-  }
+}
   
-  /* Popup container */
-  .popup {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
+.text-display {
+    width: 30%;
+    float: right;
+    text-align: center;
+    font-size: larger;
+}
+
+.side-by-side {
+    text-align: center;
+    display: inline-block;
+    margin: auto
   }
 
-  /* The actual popup (appears on top) */
-  .popup .popup-content {
-      visibility: hidden;
-      width: 160px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 8px 0;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -80px;
-  }
+.Label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    font-family: "Chivo"; 
+    font-size: 17px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 100; 
+    line-height: 12.1px;
+}
 
-  /* Popup arrow */
-  .popup .popuptext::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: #555 transparent transparent transparent;
-  }
 
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-  .popup .show {
-      visibility: visible;
-      -webkit-animation: fadeIn 1s;
-      animation: fadeIn 1s
-  }
+.LabelBook{
+    font-size: smaller;
+    Display: inline-block;
+    font-family: "Chivo";
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+}
 
-  /* Add animation (fade in the popup) */
-      @-webkit-keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-  }
+.LabelBookInput{
+    width: 50px
+}
 
-  @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity:1 ;}
+input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    width: 110px;
+    font-size: 17.5px;
   }
