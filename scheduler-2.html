@@ -16,32 +16,148 @@
             <th>Sunday</th>
         </tr>
     </table>
-    
-    <div id="myPopup" class="popup">
-        <div class="popup-content">
-            <p>This is the content of the popup window.</p>
-            <button onclick="closeWindow()">Close</button>
-        </div>
-    </div>
+    <div id= "text-display" class="text-display">Add Task</div>
+    <form id="taskForm" style="display:none"> 
+    <label for="Period" class = "Label">Period:</label>
+    <input type="text" id="Period" name="Period" min="1" max="10">
+    <br>
+    <label for="TaskName" class = "Label">Task Name:</label>
+    <input type="text" id="TaskName" name="TaskName">
+    <br>
+    <label for="Priority" class = "Label">Priority:</label>
+    <input type="text" id="Priority" name="Priority" min="1" max="10">
+    <br>
+    <label for="DueDate" class = "Label">Due Date:</label>
+    <input type="date" id="DueDate" name="DueDate">
+    <br>
+    <label for="Difficulty" class = "Label">Difficulty:</label>
+    <input type="text" id="Difficulty" name="Difficulty" min="1" max="2">
+    <br>
+    <br>
+    <label for="bookRoom" class = "LabelBook">Book Room:</label>
+    <input type="text" id="bookRoom" name="bookRoom" class = "LabelBookInput">
+    <label for="bookPeriod" class = "LabelBook">Period:</label>
+    <input type="text" id="bookPeriod" name="bookPeriod" class = "LabelBookInput">
+    <label for="bookDate" class = "LabelBook">Date:</label>
+    <input type="date" id="bookDate" name="bookDate" class = "LabelBookInput">
+    <br>
+    <br>
+    <button class="side-by-side" id="previewButton">Preview</button>
+    <button class="side-by-side" id="addManuallyButton">Add Manually</button>
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    </form>
 
     <script>
-    
-        function openWindow() {
-            // Get the popup element 
-            var popup = document.getElementById("myPopup");
-            // Toggle the visibility of the popup
-            if (popup.style.visibility === "hidden") {
-            popup.style.visibility = "visible";
-            }
+        function previewFunction(){
+
         }
-    
-        function closeWindow() {
-            // Get the popup element 
-            var popup = document.getElementById("myPopup");
-            // Hide the popup
-            popup.style.visibility = "hidden";
+        function addManually(){
+
         }
-    
+
+        function addTask() {
+
+
+            // get a reference to the form and the submit button
+            const form = document.getElementById("taskForm");
+            const submitButton = form.querySelector("input[type=submit]");
+
+            // get a reference to all the "empty" buttons
+            const buttons = document.querySelectorAll("button[id=emptyButton]");
+
+            // add a click event listener to each "empty" button
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                // show the form when an "empty" button is clicked
+                form.style.display = "block";
+                });
+            });
+
+            // add a submit event listener to the form
+            form.addEventListener("submit", event => {
+                event.preventDefault();
+
+                // hide the form when it is submitted
+                form.style.display = "none";
+            });
+
+            form.addEventListener("submit", + function(event) {
+                event.preventDefault();
+
+                const InputPeriod = document.getElementById("Period");
+                const Period = inputPeriod.value;
+
+                const InputTaskName = document.getElementById("TaskName");
+                const TaskName = InputTaskName.value;
+
+                const InputPriority = document.getElementById("Priority");
+                const Priority = InputPriority.value;
+
+                const InputDueDate = document.getElementById("DueDate");
+                const DueDate = new date(InputDueDate.value);
+
+                const InputDifficulty = document.getElementById("Difficulty");
+                const Difficulty = InputDifficulty.value;
+
+                const InputbookRoom = document.getElementById("bookRoom");
+                const bookRoom = InputBookRoom.value;
+
+                const InputbookPeriod = document.getElementById("bookPeriod");
+                const bookPeriod = InputBookPeriod.value;
+
+                const InputbookDate = document.getElementById("bookDate");
+                const bookDate = new date(InputBookDate.value);
+
+            });
+            
+
+            submitButton.addEventListener("click", + function(event) {
+                event.preventDefault();
+                
+                const InputPeriod = document.getElementById("Period");
+                const Period = inputPeriod.value;
+
+                const InputTaskName = document.getElementById("TaskName");
+                const TaskName = InputTaskName.value;
+
+                const InputPriority = document.getElementById("Priority");
+                const Priority = InputPriority.value;
+
+                const InputDueDate = document.getElementById("DueDate");
+                const DueDate = new date(InputDueDate.value);
+
+                const InputDifficulty = document.getElementById("Difficulty");
+                const Difficulty = InputDifficulty.value;
+
+                const InputbookRoom = document.getElementById("bookRoom");
+                const bookRoom = InputBookRoom.value;
+
+                const InputbookPeriod = document.getElementById("bookPeriod");
+                const bookPeriod = InputBookPeriod.value;
+
+                const InputbookDate = document.getElementById("bookDate");
+                const bookDate = new date(InputBookDate.value);
+
+            });
+
+
+            const previewButton = document.createElement("button");
+            previewButton.id = "previewButton";
+            previewButton.textContent = "Preview";
+            previewButton.addEventListener("click", previewFunction);
+
+            const addManuallyButton = document.createElement("button");
+            addManuallyButton.id = "addManuallyButton";
+            addManuallyButton.textContent = "Add Manually";
+            addManuallyButton.addEventListener("click", addManually);
+
+            document.body.appendChild(previewButton);
+            document.body.appendChild(addManuallyButton);
+
+        };
+
         const times = ["8:30 - 9:15", "9:15 - 10:00", "10:00 - 10:20", "10:20 - 11:05", "11:05 - 11:50", "11:50 - 12:35", "12:35 - 13:20", "13:20 - 14:05", "14:05 - 14:20", "14:20 - 15:05", "15:05 - 15:50", "15:50 - 16:35"];
         const schedule = document.getElementById("schedule");
         times.forEach(time => {
@@ -51,15 +167,15 @@
             row.appendChild(timeCell);
             for (let i = 0; i < 7; i++) {
                 const cell = document.createElement("td");
-                const button = document.createElement("button");
-                button.textContent = "empty";
-                button.addEventListener("click", openWindow);
-                cell.appendChild(button);
+                const emptyButton = document.createElement("button");
+                emptyButton.textContent = "empty";
+                emptyButton.id = "emptyButton"
+                emptyButton.addEventListener("click", addTask);
+                cell.appendChild(emptyButton);
                 row.appendChild(cell);
             }
             schedule.appendChild(row);
         });
-
-  </script>
+    </script>
 </body>
 </html>
