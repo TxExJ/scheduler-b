@@ -17,27 +17,68 @@
         </tr>
     </table>
     <div id= "text-display" class="text-display">Add Task</div>
-    <form id="taskForm" style="display:none"> 
-    <label for="Period" class = "Label">Period:</label>
-    <input type="text" id="Period" name="Period" min="1" max="10">
-    <br>
+    <div id="recommendedTimeSlot"></div>
+    <form id="taskForm" style="display:none" onsubmit="return false;"> 
     <label for="TaskName" class = "Label">Task Name:</label>
-    <input type="text" id="TaskName" name="TaskName">
+    <input type="text" id="TaskName" name="TaskName">    
     <br>
     <label for="Priority" class = "Label">Priority:</label>
-    <input type="text" id="Priority" name="Priority" min="1" max="10">
+    <select id= "Priority" name="Priority">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    <br>
+    <label for="Difficulty" class = "Label">Difficulty:</label>
+    <select id = "Difficulty" name="Difficulty" >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>        
     <br>
     <label for="DueDate" class = "Label">Due Date:</label>
     <input type="date" id="DueDate" name="DueDate">
     <br>
-    <label for="Difficulty" class = "Label">Difficulty:</label>
-    <input type="text" id="Difficulty" name="Difficulty" min="1" max="2">
+    <br>
+    <label for="TimeToComplete" class = "LabelTTC">Time taken To Complete Task (Hours):</label>
+    <select id="TimeToComplete" name="TimeToComplete">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5+</option>
+    </select>
     <br>
     <br>
     <label for="bookRoom" class = "LabelBook">Book Room:</label>
     <input type="text" id="bookRoom" name="bookRoom" class = "LabelBookInput">
     <label for="bookPeriod" class = "LabelBook">Period:</label>
-    <input type="text" id="bookPeriod" name="bookPeriod" class = "LabelBookInput">
+    <select id="bookPeriod" name="bookPeriod" class = "LabelBookInput">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>        
     <label for="bookDate" class = "LabelBook">Date:</label>
     <input type="date" id="bookDate" name="bookDate" class = "LabelBookInput">
     <br>
@@ -50,6 +91,71 @@
     </form>
 
     <script>
+        const schedule = document.getElementById("schedule");
+        let currentDate = new Date();
+        function updateColumnHeaders() {
+
+            // get the current date
+
+            // get the day of the week (0 is Sunday, 1 is Monday, etc.)
+            const dayOfWeek = currentDate.getDay();
+
+            // get the current month and day
+            const currentMonth = currentDate.getMonth();
+            const currentDay = currentDate.getDate();
+
+            // loop through the columns
+            for (let i = 1; i < schedule.rows[0].cells.length; i++) {
+                // get the cell for the column
+                const cell = schedule.rows[0].cells[i];
+
+                // get the date for the column
+                let columnDate = new Date(currentDate);
+                columnDate.setDate(currentDay + (i - 1 - dayOfWeek));
+
+                // format the date as a string (e.g. "Monday, Jan 4")
+                const dateString = `${columnDate.toLocaleDateString("en-US", {
+                    weekday: "long"
+                })} (${columnDate.toLocaleDateString("en-US", {
+                    month: "2-digit",
+                    day: "2-digit"
+                })})`;
+
+
+            // set the text content of the cell to the formatted date string
+            cell.textContent = dateString;
+            }
+        }
+
+        window.addEventListener("load", updateColumnHeaders);
+
+        const timeColumn = schedule.rows[0].cells[0];
+
+        const backButton = document.createElement("button");
+        backButton.innerHTML = "&larr;";  // use the left arrow HTML entity
+        backButton.className = "back-button";
+        backButton.addEventListener("click", () => {
+            // Decrement the current date by 7 days (to go back one week)
+            currentDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+            // Update the column headers with the new dates
+            updateColumnHeaders();
+        });
+
+        timeColumn.insertBefore(backButton, timeColumn.firstChild);  // insert the button at the beginning of the "Time" column
+        
+        // create the "forward" button
+        const forwardButton = document.createElement("button");
+        forwardButton.innerHTML = "&rarr;";  // use the right arrow HTML entity
+        forwardButton.className = "forward-button";
+        forwardButton.addEventListener("click", () => {
+            // Increment the current date by 7 days (to go forward one week)
+            currentDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+            // Update the column headers with the new dates
+            updateColumnHeaders();
+        });
+        timeColumn.appendChild(forwardButton);  // append the button to the end of the "Time" column
+        timeColumn.insertBefore(forwardButton, timeColumn.lastChild);  // insert the button at the end of the "Time" column
+        
         function previewFunction(){
 
         }
@@ -57,23 +163,38 @@
 
         }
 
+        const form = document.getElementById("taskForm");
+        // get a reference to all the "empty" buttons
+        const buttons = document.querySelectorAll("button[id=emptyButton]");
+        // add a click event listener to each "empty" button
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+            addTask()
+            });
+        });
+        
+
         function addTask() {
 
-
+            form.style.display = "block";
             // get a reference to the form and the submit button
-            const form = document.getElementById("taskForm");
             const submitButton = form.querySelector("input[type=submit]");
 
-            // get a reference to all the "empty" buttons
-            const buttons = document.querySelectorAll("button[id=emptyButton]");
+            // get a reference to the schedule table
+            const schedule = document.getElementById("schedule");
 
-            // add a click event listener to each "empty" button
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                // show the form when an "empty" button is clicked
-                form.style.display = "block";
-                });
-            });
+            // add IDs to the cells in the schedule table
+            for (let i = 1; i < schedule.rows.length; i++) {  // skip the first row (the header row)
+                for (let j = 1; j < schedule.rows[i].cells.length; j++) {  // skip the first cell (the "Time" cell)
+                const cell = schedule.rows[i].cells[j];
+                const day = cell.parentNode.cells[0].textContent;  // get the day from the first cell in the row
+                const date = cell.textContent;  // get the date from the cell
+                cell.id = `period${i}-${day}-${date}`;  // set the id
+                }
+            }
+
+           
+
 
             // add a submit event listener to the form
             form.addEventListener("submit", event => {
@@ -83,11 +204,12 @@
                 form.style.display = "none";
             });
 
-            form.addEventListener("submit", + function(event) {
+            function submitForm(event) {
                 event.preventDefault();
+                form.style.display = "none";
 
-                const InputPeriod = document.getElementById("Period");
-                const Period = inputPeriod.value;
+                const InputTimeToComplete = document.getElementById("TimeToComplete");
+                const TimeToComplete = InputTimeToComplete.value;
 
                 const InputTaskName = document.getElementById("TaskName");
                 const TaskName = InputTaskName.value;
@@ -96,52 +218,26 @@
                 const Priority = InputPriority.value;
 
                 const InputDueDate = document.getElementById("DueDate");
-                const DueDate = new date(InputDueDate.value);
+                const DueDate = new Date(InputDueDate.value);
 
                 const InputDifficulty = document.getElementById("Difficulty");
                 const Difficulty = InputDifficulty.value;
 
-                const InputbookRoom = document.getElementById("bookRoom");
+                const InputBookRoom = document.getElementById("bookRoom");
                 const bookRoom = InputBookRoom.value;
 
-                const InputbookPeriod = document.getElementById("bookPeriod");
+                const InputBookPeriod = document.getElementById("bookPeriod");
                 const bookPeriod = InputBookPeriod.value;
 
-                const InputbookDate = document.getElementById("bookDate");
-                const bookDate = new date(InputBookDate.value);
+                const InputBookDate = document.getElementById("bookDate");
+                const bookDate = new Date(InputBookDate.value);
+            };
 
-            });
+            form.addEventListener("submit", submitForm);
             
 
-            submitButton.addEventListener("click", + function(event) {
-                event.preventDefault();
-                
-                const InputPeriod = document.getElementById("Period");
-                const Period = inputPeriod.value;
-
-                const InputTaskName = document.getElementById("TaskName");
-                const TaskName = InputTaskName.value;
-
-                const InputPriority = document.getElementById("Priority");
-                const Priority = InputPriority.value;
-
-                const InputDueDate = document.getElementById("DueDate");
-                const DueDate = new date(InputDueDate.value);
-
-                const InputDifficulty = document.getElementById("Difficulty");
-                const Difficulty = InputDifficulty.value;
-
-                const InputbookRoom = document.getElementById("bookRoom");
-                const bookRoom = InputBookRoom.value;
-
-                const InputbookPeriod = document.getElementById("bookPeriod");
-                const bookPeriod = InputBookPeriod.value;
-
-                const InputbookDate = document.getElementById("bookDate");
-                const bookDate = new date(InputBookDate.value);
-
-            });
-
+            submitButton.addEventListener("click", submitForm);
+            submitButton.addEventListener("click", recommendTimeSlot);
 
             const previewButton = document.createElement("button");
             previewButton.id = "previewButton";
@@ -153,29 +249,173 @@
             addManuallyButton.textContent = "Add Manually";
             addManuallyButton.addEventListener("click", addManually);
 
-            document.body.appendChild(previewButton);
-            document.body.appendChild(addManuallyButton);
+
 
         };
 
-        const times = ["8:30 - 9:15", "9:15 - 10:00", "10:00 - 10:20", "10:20 - 11:05", "11:05 - 11:50", "11:50 - 12:35", "12:35 - 13:20", "13:20 - 14:05", "14:05 - 14:20", "14:20 - 15:05", "15:05 - 15:50", "15:50 - 16:35"];
-        const schedule = document.getElementById("schedule");
+        const times = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
         times.forEach(time => {
             const row = document.createElement("tr");
             const timeCell = document.createElement("td");
             timeCell.textContent = time;
+            timeCell.classList.add("times");
             row.appendChild(timeCell);
             for (let i = 0; i < 7; i++) {
                 const cell = document.createElement("td");
                 const emptyButton = document.createElement("button");
                 emptyButton.textContent = "empty";
                 emptyButton.id = "emptyButton"
+                emptyButton.className = "empty";
                 emptyButton.addEventListener("click", addTask);
                 cell.appendChild(emptyButton);
                 row.appendChild(cell);
             }
             schedule.appendChild(row);
         });
+
+        // define an array of objects representing the time slots in the schedule
+        const timeSlots = [
+            { time: "8 - 9", period: "Early morning" },
+            { time: "9 - 10", period: "Early morning" },
+            { time: "10 - 11", period: "Midday" },
+            { time: "11 - 12", period: "Midday" },
+            { time: "12 - 1", period: "Midday" },
+            { time: "1 - 2", period: "Later in the day" },
+            { time: "2 - 3", period: "Later in the day" },
+            { time: "3 - 4", period: "Later in the day" },
+            { time: "4 - 5", period: "Later in the day" },
+            { time: "5 - 6", period: "Later in the day" },
+            { time: "6 - 7", period: "Later in the day" },
+            { time: "7 - 8", period: "Later in the day" }
+        ];
+
+        const recommendedPriority = {
+            "1": "Later in the day",
+            "2": "Later in the day",
+            "3": "Later in the day",
+            "4": "Midday",
+            "5": "Midday",
+            "6": "Midday",
+            "7": "Midday",
+            "8": "Early morning",
+            "9": "Early morning",
+            "10": "Early morning"
+        };
+
+        const recommendedDifficulties = {
+            "1": "Later in the day",
+            "2": "Later in the day",
+            "3": "Later in the day",
+            "4": "Midday",
+            "5": "Midday",
+            "6": "Midday",
+            "7": "Early morning",
+            "8": "Early morning",
+            "9": "Early morning",
+            "10": "Early morning"
+        };
+
+        // define the recommended times for each time to complete
+        const recommendedTimeToCompletes = {
+            "1": "Later in the day",
+            "2": "Midday",
+            "3": "Early morning",
+            "4": "Early morning",
+            "5+" : "Early morning"
+        };
+
+        function recommendTimeSlot() {
+            console.log("recommendedTimeSlot called")
+            // get the values of the form input fields
+            const schedule = document.getElementById("schedule");
+            const taskName = document.getElementById("TaskName").value;
+            const priority = document.getElementById("Priority").value;
+            const difficulty = document.getElementById("Difficulty").value;
+            const dueDate = document.getElementById("DueDate").value;
+            const duration = document.getElementById("TimeToComplete").value;
+
+            // convert the due date and duration to Date objects
+            const dueDateAsDate = new Date(dueDate);
+            const durationAsDate = new Date();
+            durationAsDate.setHours(duration);
+
+            // set the recommended time slot to a default value based on the duration of the task
+            let recommendedTimeSlot = recommendedTimeToCompletes[duration];
+
+            // loop through the rows of the schedule table
+            for (let i = 1; i < schedule.rows.length; i++) {
+                // get the cells in the current row
+                const cells = schedule.rows[i].cells;
+
+                // get the time of the current row
+                const time = cells[0].textContent;
+
+                // if the time is "Early morning" and the task is high priority or high difficulty,
+                // or if the time is "Midday" and the task is high priority,
+                // set the recommended time slot to the current time
+                if ((time === "Early morning" && (priority > 7 || difficulty > 7)) ||
+                    (time === "Midday" && priority > 7)) {
+                    recommendedTimeSlot = time;
+                    break;
+                }
+
+                // if the time is "Later in the day" and the task is low priority and low difficulty,
+                // set the recommended time slot to the current time
+                if (time === "Later in the day" && priority <= 7 && difficulty <= 7) {
+                    recommendedTimeSlot = time;
+                    break;
+                }
+            }
+
+            for (let i = 1; i < schedule.rows.length; i++) {
+                // get the cells in the current row
+                const cells = schedule.rows[i].cells;
+
+                // check if the cell is empty
+                if (cells[1].textContent === "") {
+                    // get the button element inside the cell
+                    const button = cells[1].querySelector("button");
+                    // add the class to the button
+                    button.classList.add("empty");
+                }
+            }
+            // loop through the rows of the schedule table again to check availability
+            for (let i = 1; i < schedule.rows.length; i++) {
+                // get the cells in the current row
+                const cells = schedule.rows[i].cells;
+
+                // get the time of the current row
+                const time = cells[0].textContent;
+
+                // check the due date of the task
+                const taskDueDate = new Date(dueDate);
+                taskDueDate.setDate(taskDueDate.getDate() - 2);  // set the due date to be two days before the actual due date
+                const currentDate = new Date(cells[1].textContent);
+
+                // if the current date is equal to or after the due date of the task, skip this iteration
+                if (currentDate >= taskDueDate) {
+                    continue;
+                }
+
+                // if the time is the recommended time and the cell is empty,
+                // add the task to the schedule and break out of the loop
+                if (time === recommendedTimeSlot && cells[1].classList.contains("empty")) {
+                    console.log("yeye");
+                    const button = document.createElement("button");
+                    button.innerText = taskName;
+                    cells[1].innerHTML = "";
+                    cells[1].appendChild(button);;
+                    break;
+                }
+
+            }
+            console.log(recommendedTimeSlot);
+            // display the recommended time slot on the page
+            document.getElementById("recommendedTimeSlot").textContent = recommendedTimeSlot;
+        };
+
+
+
     </script>
 </body>
 </html>
