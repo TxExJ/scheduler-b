@@ -56,26 +56,15 @@ button:hover {
     margin: auto
   }
 
-.Label {
+  .Label {
     display: inline-block;
-    width: 100px;
-    text-align: right;
-    font-family: "Chivo"; 
-    font-size: 17px; 
-    font-style: normal; 
-    font-variant: normal; 
-    font-weight: 100; 
-    line-height: 12.1px;
+    width: 150px;
+    text-align: center;
 }
 
 
 .LabelBook{
-    font-size: smaller;
     Display: inline-block;
-    font-family: "Chivo";
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
 }
 
 .LabelBookInput{
@@ -89,3 +78,18 @@ input[type="submit"] {
     width: 110px;
     font-size: 17.5px;
   }
+
+.back-button, .forward-button {
+    padding: 5px 10px;
+    font-size: larger;
+}
+
+.times {
+    text-align: center;
+}
+
+.LabelTTC{
+    width: 50%;
+}
+
+
